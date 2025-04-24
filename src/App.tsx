@@ -15,10 +15,23 @@ setup(createElement);
 import SLTabGroup from '@shoelace-style/shoelace/dist/react/tab-group/index.js';
 import SLTabPanel from '@shoelace-style/shoelace/dist/react/tab-panel/index.js';
 import SLTab from '@shoelace-style/shoelace/dist/react/tab/index.js';
+
+const TabGroup = styled(SLTabGroup)`
+  background-color: white;
+  height: 100%;
+`;
+const TabPanel = styled(SLTabPanel)`
+  color: black;
+  height: 100%;
+  width: 100%;
+`;
+const Tab = styled(SLTab)`
+  color: black;
+`;
 const Title = styled("h2")`
   font-weight: bold;
-  color: dodgerblue;
-  `
+  font-size: 24px;
+`;
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -38,26 +51,15 @@ function App() {
           <button className="profile-button">Log Out</button>
         </div>
       </div>
-      <SLTabGroup>
-        <SLTab>Timer</SLTab>
-        <SLTab>Analytics</SLTab>
-        <SLTab>Tasks</SLTab>
-      </SLTabGroup>
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
+      <TabGroup placement="top">
+        <Tab slot="nav" panel="timer" active>Timer</Tab>
+        <Tab slot="nav" panel="analytics">Analytics</Tab>
+        <Tab slot="nav" panel="tasks">Tasks</Tab>
+
+        <TabPanel name="timer"> This is the Timer Page</TabPanel>
+        <TabPanel name="analytics"> This is the Analytics Page </TabPanel>
+        <TabPanel name="tasks"> This is the Tasks PAge </TabPanel>
+      </TabGroup>
     </main>
   );
 }
