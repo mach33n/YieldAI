@@ -16,21 +16,37 @@ import SLTabGroup from '@shoelace-style/shoelace/dist/react/tab-group/index.js';
 import SLTabPanel from '@shoelace-style/shoelace/dist/react/tab-panel/index.js';
 import SLTab from '@shoelace-style/shoelace/dist/react/tab/index.js';
 
+// Custom Stylings
+// TODO: Migrate to css file
+const Title = styled("h2")`
+  font-weight: bold;
+  font-size: 24px;
+`;
 const TabGroup = styled(SLTabGroup)`
   background-color: white;
-  height: 100%;
 `;
 const TabPanel = styled(SLTabPanel)`
   color: black;
-  height: 100%;
-  width: 100%;
+  height: 600px;
+  width: 800px;
+  overflow: auto;
 `;
 const Tab = styled(SLTab)`
   color: black;
 `;
-const Title = styled("h2")`
-  font-weight: bold;
-  font-size: 24px;
+const TimerTabGroup = styled(SLTabGroup)`
+  background-color: white;
+  --indicator-color: rgba(0, 0, 0, 0.0);
+  --track-color: rgba(0, 0, 0, 0.0);
+  display: flex;
+  justify-content: center;
+`;
+const TimerTabPanel = styled(SLTabPanel)`
+  color: black;
+  height: 600px;
+  overflow: auto;
+`;
+const TimerTab = styled(SLTab)`
 `;
 
 function App() {
@@ -52,11 +68,23 @@ function App() {
         </div>
       </div>
       <TabGroup placement="top">
-        <Tab slot="nav" panel="timer" active>Timer</Tab>
-        <Tab slot="nav" panel="analytics">Analytics</Tab>
-        <Tab slot="nav" panel="tasks">Tasks</Tab>
+        <Tab className="profile-tab" slot="nav" panel="timer" active>Timer</Tab>
+        <Tab className="profile-tab" slot="nav" panel="analytics">Analytics</Tab>
+        <Tab className="profile-tab" slot="nav" panel="tasks">Tasks</Tab>
 
-        <TabPanel name="timer"> This is the Timer Page</TabPanel>
+        <TabPanel name="timer">
+          <TimerTabGroup>
+            <TimerTab className="timer-profile-tab" slot="nav" panel="break" active>
+              <button>Smart Break</button>
+            </TimerTab>
+            <TimerTab className="timer-profile-tab" slot="nav" panel="guard">
+              <button>Focus Guard</button>
+            </TimerTab>
+            <TimerTab className="timer-profile-tab" slot="nav" panel="chunker">
+              <button>Task Chunker</button>
+            </TimerTab>
+          </TimerTabGroup>
+        </TabPanel>
         <TabPanel name="analytics"> This is the Analytics Page </TabPanel>
         <TabPanel name="tasks"> This is the Tasks PAge </TabPanel>
       </TabGroup>

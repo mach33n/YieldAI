@@ -25,9 +25,9 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   text-align: center;
-  height: 100%;
+  height: 600px;
+  overflow: auto;
 }
 
 .header-bar {
@@ -49,6 +49,15 @@
   width: 45%;
 }
 
+.timer-profile-tab::part(base) {
+    margin: 0 10px;
+  }
+.timer-profile-tab[active]::part(base) {
+    color: rgb(75, 0, 211);
+}
+.timer-profile-tab:hover::part(base) {
+    color: rgb(75, 0, 211);
+}
 .logo {
   height: 6em;
   padding: 1.5em;
