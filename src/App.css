@@ -23,11 +23,7 @@
 
 .container {
   margin: 0;
-  display: flex;
-  flex-direction: column;
   text-align: center;
-  height: 600px;
-  overflow: auto;
 }
 
 .header-bar {
@@ -49,15 +45,6 @@
   width: 45%;
 }
 
-.timer-profile-tab::part(base) {
-    margin: 0 10px;
-  }
-.timer-profile-tab[active]::part(base) {
-    color: rgb(75, 0, 211);
-}
-.timer-profile-tab:hover::part(base) {
-    color: rgb(75, 0, 211);
-}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -117,10 +104,6 @@ button:active {
 input,
 button {
   outline: none;
-}
-
-#greet-input {
-  margin-right: 5px;
 }
 
 @media (prefers-color-scheme: dark) {

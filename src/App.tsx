@@ -15,6 +15,7 @@ setup(createElement);
 import SLTabGroup from '@shoelace-style/shoelace/dist/react/tab-group/index.js';
 import SLTabPanel from '@shoelace-style/shoelace/dist/react/tab-panel/index.js';
 import SLTab from '@shoelace-style/shoelace/dist/react/tab/index.js';
+import SLCard from '@shoelace-style/shoelace/dist/react/card/index.js';
 
 // Custom Stylings
 // TODO: Migrate to css file
@@ -27,9 +28,9 @@ const TabGroup = styled(SLTabGroup)`
 `;
 const TabPanel = styled(SLTabPanel)`
   color: black;
-  height: 600px;
-  width: 800px;
-  overflow: auto;
+  padding-left: 15%;
+  padding-right: 15%;
+  height: 410px;
 `;
 const Tab = styled(SLTab)`
   color: black;
@@ -38,25 +39,35 @@ const TimerTabGroup = styled(SLTabGroup)`
   background-color: white;
   --indicator-color: rgba(0, 0, 0, 0.0);
   --track-color: rgba(0, 0, 0, 0.0);
-  display: flex;
-  justify-content: center;
 `;
 const TimerTabPanel = styled(SLTabPanel)`
   color: black;
-  height: 600px;
-  overflow: auto;
 `;
 const TimerTab = styled(SLTab)`
+  width: 100%;
+  pointer-events: none;
+  &::part(base) {
+    opacity: 1;
+    cursor: default;
+}
 `;
-
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
-
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
+const TimerButton = styled("button")`
+  pointer-events: auto;
+  background-color: ${props => props.active 
+    ? 'rgb(224, 231, 255)' /* indigo-100 */ 
+    : 'rgb(243, 244, 246)' /* gray-100 */};
+  color: ${props => props.active 
+    ? 'rgb(67, 56, 202)' /* indigo-700 */ 
+    : 'rgb(75, 85, 99)' /* gray-600 */};
+  `;
+const TimerCard = styled(SLCard)`
+  width: 100%;
+  &::part(body) {
+    background-color: gray;
   }
+`
+function App() {
+  const [mode, setMode] = useState('smart-break');
 
   return (
     <main className="container">
@@ -74,15 +85,24 @@ function App() {
 
         <TabPanel name="timer">
           <TimerTabGroup>
-            <TimerTab className="timer-profile-tab" slot="nav" panel="break" active>
-              <button>Smart Break</button>
+            <TimerTab className="timer-profile-tab" slot="nav" panel="smart-break" active={mode === 'smart-break'}>
+              <TimerButton active={mode === 'smart-break'} onClick={() => setMode('smart-break')}>Smart Break</TimerButton>
             </TimerTab>
-            <TimerTab className="timer-profile-tab" slot="nav" panel="guard">
-              <button>Focus Guard</button>
+            <TimerTab className="timer-profile-tab" slot="nav" panel="focus-guard" active={mode === 'focus-guard'}>
+              <TimerButton active={mode === 'focus-guard'} onClick={() => setMode('focus-guard')}>Focus Guard</TimerButton>
             </TimerTab>
-            <TimerTab className="timer-profile-tab" slot="nav" panel="chunker">
-              <button>Task Chunker</button>
+            <TimerTab className="timer-profile-tab" slot="nav" panel="task-chunker" active={mode === 'task-chunker'}>
+              <TimerButton active={mode === 'task-chunker'} onClick={() => setMode('task-chunker')}>Task Chunker</TimerButton>
             </TimerTab>
+
+            <TimerTabPanel name="smart-break">
+              <TimerCard>
+                Some Text
+              </TimerCard>
+              <TimerCard></TimerCard>
+            </TimerTabPanel>
+            <TimerTabPanel name="focus-guard">Focus Guard Page</TimerTabPanel>
+            <TimerTabPanel name="task-chunker">Task Chunker Page</TimerTabPanel>
           </TimerTabGroup>
         </TabPanel>
         <TabPanel name="analytics"> This is the Analytics Page </TabPanel>
