@@ -16,6 +16,7 @@ import SLTabGroup from '@shoelace-style/shoelace/dist/react/tab-group/index.js';
 import SLTabPanel from '@shoelace-style/shoelace/dist/react/tab-panel/index.js';
 import SLTab from '@shoelace-style/shoelace/dist/react/tab/index.js';
 import SLCard from '@shoelace-style/shoelace/dist/react/card/index.js';
+import SLProgressRing from '@shoelace-style/shoelace/dist/react/progress-ring/index.js';
 
 // Custom Stylings
 // TODO: Migrate to css file
@@ -23,22 +24,12 @@ const Title = styled("h2")`
   font-weight: bold;
   font-size: 24px;
 `;
-const TabGroup = styled(SLTabGroup)`
-  background-color: white;
-`;
-const TabPanel = styled(SLTabPanel)`
-  color: black;
-  padding-left: 15%;
-  padding-right: 15%;
-  height: 410px;
-`;
-const Tab = styled(SLTab)`
-  color: black;
-`;
 const TimerTabGroup = styled(SLTabGroup)`
   background-color: white;
   --indicator-color: rgba(0, 0, 0, 0.0);
   --track-color: rgba(0, 0, 0, 0.0);
+  padding-left: 15%;
+  padding-right: 15%;
 `;
 const TimerTabPanel = styled(SLTabPanel)`
   color: black;
@@ -66,6 +57,9 @@ const TimerCard = styled(SLCard)`
     background-color: gray;
   }
 `
+const TimerProgressRing = styled(SLProgressRing)`
+
+  `;
 function App() {
   const [mode, setMode] = useState('smart-break');
 
@@ -78,36 +72,28 @@ function App() {
           <button className="profile-button">Log Out</button>
         </div>
       </div>
-      <TabGroup placement="top">
-        <Tab className="profile-tab" slot="nav" panel="timer" active>Timer</Tab>
-        <Tab className="profile-tab" slot="nav" panel="analytics">Analytics</Tab>
-        <Tab className="profile-tab" slot="nav" panel="tasks">Tasks</Tab>
+      <TimerTabGroup>
+        <TimerTab className="timer-profile-tab" slot="nav" panel="smart-break" active={mode === 'smart-break'}>
+          <TimerButton active={mode === 'smart-break'} onClick={() => setMode('smart-break')}>Smart Break</TimerButton>
+        </TimerTab>
+        <TimerTab className="timer-profile-tab" slot="nav" panel="focus-guard" active={mode === 'focus-guard'}>
+          <TimerButton active={mode === 'focus-guard'} onClick={() => setMode('focus-guard')}>Focus Guard</TimerButton>
+        </TimerTab>
+        <TimerTab className="timer-profile-tab" slot="nav" panel="task-chunker" active={mode === 'task-chunker'}>
+          <TimerButton active={mode === 'task-chunker'} onClick={() => setMode('task-chunker')}>Task Chunker</TimerButton>
+        </TimerTab>
 
-        <TabPanel name="timer">
-          <TimerTabGroup>
-            <TimerTab className="timer-profile-tab" slot="nav" panel="smart-break" active={mode === 'smart-break'}>
-              <TimerButton active={mode === 'smart-break'} onClick={() => setMode('smart-break')}>Smart Break</TimerButton>
-            </TimerTab>
-            <TimerTab className="timer-profile-tab" slot="nav" panel="focus-guard" active={mode === 'focus-guard'}>
-              <TimerButton active={mode === 'focus-guard'} onClick={() => setMode('focus-guard')}>Focus Guard</TimerButton>
-            </TimerTab>
-            <TimerTab className="timer-profile-tab" slot="nav" panel="task-chunker" active={mode === 'task-chunker'}>
-              <TimerButton active={mode === 'task-chunker'} onClick={() => setMode('task-chunker')}>Task Chunker</TimerButton>
-            </TimerTab>
-
-            <TimerTabPanel name="smart-break">
-              <TimerCard>
-                Some Text
-              </TimerCard>
-              <TimerCard></TimerCard>
-            </TimerTabPanel>
-            <TimerTabPanel name="focus-guard">Focus Guard Page</TimerTabPanel>
-            <TimerTabPanel name="task-chunker">Task Chunker Page</TimerTabPanel>
-          </TimerTabGroup>
-        </TabPanel>
-        <TabPanel name="analytics"> This is the Analytics Page </TabPanel>
-        <TabPanel name="tasks"> This is the Tasks PAge </TabPanel>
-      </TabGroup>
+        <TimerTabPanel name="smart-break">
+          <TimerCard>
+            <TimerProgressRing>
+              Blah
+            </TimerProgressRing>
+          </TimerCard>
+          <TimerCard></TimerCard>
+        </TimerTabPanel>
+        <TimerTabPanel name="focus-guard">Focus Guard Page</TimerTabPanel>
+        <TimerTabPanel name="task-chunker">Task Chunker Page</TimerTabPanel>
+      </TimerTabGroup>
     </main>
   );
 }
