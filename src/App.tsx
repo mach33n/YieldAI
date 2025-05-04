@@ -18,6 +18,12 @@ import SLTab from '@shoelace-style/shoelace/dist/react/tab/index.js';
 import SLCard from '@shoelace-style/shoelace/dist/react/card/index.js';
 import SLProgressRing from '@shoelace-style/shoelace/dist/react/progress-ring/index.js';
 
+ invoke('call')
+ .then((res) =>
+   console.log(res)
+ )
+ .catch((e) => console.error(e))
+ 
 // Custom Stylings
 // TODO: Migrate to css file
 const Title = styled("h2")`
